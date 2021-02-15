@@ -31,6 +31,11 @@ const Header = () => {
                 <i className='fas fa-upload'></i> Upload
               </Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/cart'>
+              <Nav.Link>
+                <i className='fas fa-shopping-cart'></i> Cart
+              </Nav.Link>
+            </LinkContainer>
             {userInfo ? (
               <NavDropdown title={userInfo.name} id='username'>
                 <LinkContainer to='/profile'>

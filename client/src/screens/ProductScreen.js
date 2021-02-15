@@ -7,7 +7,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Rating from '../components/Rating';
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ match, history }) => {
   const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
@@ -17,7 +17,9 @@ const ProductScreen = ({ match }) => {
     dispatch(detailProduct(match.params.id));
   }, [dispatch, match]);
 
-  const addToCartHandler = () => {};
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -32,12 +34,21 @@ const ProductScreen = ({ match }) => {
         <>
           <Row>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid />
+              <Image
+                src={product.image}
+                alt={product.name}
+                fluid
+                style={{
+                  display: 'block',
+                  maxHeight: '500px',
+                  margin: '0 auto',
+                }}
+              />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
-                  <h2>{product.name}</h2>
+                  <h2 style={{ textAlign: 'center' }}>{product.name}</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Rating
