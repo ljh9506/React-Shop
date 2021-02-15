@@ -20,8 +20,8 @@ router.get('/top', getTopProducts);
 router.get('/:id', getProductById);
 
 router.delete('/:id', [protect, admin], deleteProduct);
-router.put('/:id', [protect, admin], updateProduct);
 router.post('/', [protect, admin], createProduct);
+router.put('/:id', [protect, admin], updateProduct);
 router.post('/:id/reviews', protect, createReview);
 
 export default router;

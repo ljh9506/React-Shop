@@ -16,9 +16,9 @@ const getProducts = AsyncHandler(async (req, res) => {
       }
     : {};
   const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
+  const products = await Product.find({ ...keyword });
+  // .limit(pageSize)
+  // .skip(pageSize * (page - 1));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -52,16 +52,25 @@ const deleteProduct = AsyncHandler(async (req, res) => {
 // Create a product
 
 const createProduct = AsyncHandler(async (req, res) => {
+  const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+  } = req.body;
+
   const product = new Product({
-    name: 'sample',
-    price: 0,
+    name,
+    price,
     user: req.user._id,
-    image: '/images/sample.jpg',
-    brand: 'sample brand',
-    category: 'sample category',
-    countInStock: 0,
-    numReviews: 0,
-    description: 'sample description',
+    image,
+    brand,
+    category,
+    countInStock,
+    description,
   });
 
   const createdProduct = await product.save();
