@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import { login } from '../actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { Link } from 'react-router-dom';
 
 const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -54,14 +55,11 @@ const LoginScreen = ({ history }) => {
         </Button>
       </Form>
 
-      {/* <Row className='py-3'>
+      <Row className='py-3'>
         <Col>
-          New Customer?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-            Register
-          </Link>
+          New Customer? <Link to={`/register`}>Register</Link>
         </Col>
-      </Row> */}
+      </Row>
     </FormContainer>
   );
 };

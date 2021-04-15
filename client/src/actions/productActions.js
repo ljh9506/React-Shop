@@ -8,6 +8,9 @@ import {
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
   PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_CREATE_REVIEW_REQUEST,
 } from '../constants/productConstants';
 import axios from 'axios';
 
@@ -64,9 +67,17 @@ export const createProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+    let datas = new FormData();
+    datas.append('name', product.name);
+    datas.append('category', product.category);
+    datas.append('price', product.price);
+    datas.append('countInStock', product.countInStock);
+    datas.append('description', product.description);
+    datas.append('photo', product.image, product.imageName);
+    // console.log(product.image);
     const { data } = await axios.post(
       `http://localhost:5000/api/products`,
-      product,
+      datas,
       config,
     );
 
@@ -77,6 +88,46 @@ export const createProduct = (product) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createProductReview = (productId, review) => async (
+  dispatch,
+  getState,
+) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(
+      `http://localhost:5000/api/products/${productId}/reviews`,
+      review,
+      config,
+    );
+
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

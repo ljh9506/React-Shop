@@ -33,34 +33,6 @@ const HomeScreen = () => {
               </Col>
             ))}
           </Row>
-          <Row>
-            <Col sm={12} md={6} lg={4} xl={6}>
-              <Card className='my-5'>
-                <Link to={`/product/123`}>
-                  <Card.Img src='/images/sofa.jfif' variant='top'></Card.Img>
-                </Link>
-                <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text as='div'>
-                    <Rating value={5} text={`3 reviews`} />
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col sm={12} md={6} lg={4} xl={6}>
-              <Card className='my-5'>
-                <Link to={`/product/123`}>
-                  <Card.Img src='/images/sofa.jfif' variant='top'></Card.Img>
-                </Link>
-                <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text as='div'>
-                    <Rating value={5} text={`3 reviews`} />
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
         </>
       )}
     </>

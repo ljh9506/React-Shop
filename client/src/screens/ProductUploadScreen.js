@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +13,9 @@ const ProductUploadScreen = ({ match, history }) => {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
+  const [imageName, setImageName] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
@@ -38,6 +39,7 @@ const ProductUploadScreen = ({ match, history }) => {
         name,
         price,
         image,
+        imageName,
         brand,
         category,
         countInStock,
@@ -53,31 +55,11 @@ const ProductUploadScreen = ({ match, history }) => {
     }
   }, [dispatch, history, successUpload]);
 
-  const uploadFileHandler = async (e) => {
+  const uploadFileHandler = (e) => {
     const file = e.target.files[0];
-    const formData = new FormData();
-    console.log(file);
-    formData.append('image', file);
-    setUploading(true);
-
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-      const { data } = await axios.post(
-        'http://localhost:5000/api/upload',
-        formData,
-        config,
-      );
-
-      setImage(data);
-      setUploading(false);
-    } catch (error) {
-      console.log(error);
-      setUploading(false);
-    }
+    setImage(file);
+    setImageUrl(URL.createObjectURL(file));
+    setImageName(file.name);
   };
 
   return (
@@ -112,17 +94,26 @@ const ProductUploadScreen = ({ match, history }) => {
 
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image URL'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}></Form.Control>
+
               <Form.File
                 id='image-file'
                 label='Choose File'
                 custom
                 onChange={uploadFileHandler}></Form.File>
               {uploading && <Loader />}
+              {imageUrl ? (
+                <div id='preview'>
+                  <img
+                    src={`${imageUrl}`}
+                    alt='preview'
+                    style={{
+                      marginTop: '20px',
+                      width: '200px',
+                      height: 'auto',
+                    }}
+                  />
+                </div>
+              ) : null}
             </Form.Group>
 
             <Form.Group controlId='brand'>
@@ -164,7 +155,7 @@ const ProductUploadScreen = ({ match, history }) => {
             </Form.Group>
 
             <Button type='submit' variant='primary'>
-              Update
+              Upload
             </Button>
           </Form>
         }

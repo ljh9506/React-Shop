@@ -41,22 +41,33 @@ const CartScreen = ({ match, location, history }) => {
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
-                <Row>
+                <Row
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}>
                   <Col md={2}>
-                    <Image src={item.image} alt={item.name} fluid rounded />
+                    <Image src={item.photo} alt={item.photo} fluid rounded />
                   </Col>
-                  <Col md={3}>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  <Col md={3} xs={3}>
+                    <Link
+                      to={`/product/${item.product}`}
+                      style={{ fontWeight: 'bold', fontSize: '15px' }}>
+                      {item.name}
+                    </Link>
                   </Col>
-                  <Col md={2}>${item.price}</Col>
-                  <Col md={2}>
+                  <Col md={2} xs={3}>
+                    ${item.price}
+                  </Col>
+                  <Col md={2} xs={3}>
                     <select
                       value={item.qty}
                       onChange={(e) =>
                         dispatch(
                           addToCart(item.product, Number(e.target.value)),
                         )
-                      }>
+                      }
+                      style={{ minWidth: '70px' }}>
                       {[...Array(item.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
                           {x + 1}
@@ -64,7 +75,7 @@ const CartScreen = ({ match, location, history }) => {
                       ))}
                     </select>
                   </Col>
-                  <Col md={2}>
+                  <Col md={2} xs={2}>
                     <Button
                       type='button'
                       variant='light'
