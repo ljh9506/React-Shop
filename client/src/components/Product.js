@@ -33,7 +33,7 @@ const Product = ({ product }) => {
         <Card.Img src={product.photo} variant='top'></Card.Img>
       </Link>
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>{product.name}</Card.Title>
         <Card.Text as='div'>
           <Rating
             value={product.rating}

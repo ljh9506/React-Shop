@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Product from '../components/Product';
-import { Link } from 'react-router-dom';
-import Rating from '../components/Rating';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();

@@ -30,7 +30,7 @@ const LoginScreen = ({ history }) => {
     <FormContainer>
       <h1>Sign in</h1>
       {loading && <Loader />}
-      {error && <Message />}
+      {error && <Message variant='danger'>{error}</Message>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='email'>
           <Form.Label>Email Address</Form.Label>

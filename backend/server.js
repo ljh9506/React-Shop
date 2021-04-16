@@ -10,6 +10,7 @@ import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
+const PORT = process.env.PORT || 5000;
 
 dotenv.config();
 connectDB();
@@ -37,7 +38,13 @@ app.use(notFound);
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 app.listen(
   PORT,
